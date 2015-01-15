@@ -243,7 +243,7 @@ public abstract class AbstractEpollStreamChannel extends AbstractEpollChannel {
         }
     }
 
-    private boolean doWriteSingle(ChannelOutboundBuffer in) throws Exception {
+    protected boolean doWriteSingle(ChannelOutboundBuffer in) throws Exception {
         // The outbound buffer contains only one message or it contains a file region.
         Object msg = in.current();
         if (msg instanceof ByteBuf) {
@@ -385,7 +385,7 @@ public abstract class AbstractEpollStreamChannel extends AbstractEpollChannel {
         }
     }
 
-    final class EpollStreamUnsafe extends AbstractEpollUnsafe {
+    class EpollStreamUnsafe extends AbstractEpollUnsafe {
         /**
          * The future of the current connection attempt.  If not null, subsequent
          * connection attempts will fail.
