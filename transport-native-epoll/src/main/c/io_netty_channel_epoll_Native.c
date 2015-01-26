@@ -1434,7 +1434,7 @@ JNIEXPORT jint JNICALL Java_io_netty_channel_epoll_Native_recvFd0(JNIEnv* env, j
             return -err;
         }
 
-        struct cmsghdr *cmsg = CMSG_FIRSTHDR(&descriptorMessage);
+        struct cmsghdr* cmsg = CMSG_FIRSTHDR(&descriptorMessage);
         if (!cmsg) {
             return -errno;
         }
@@ -1460,7 +1460,7 @@ JNIEXPORT jint JNICALL Java_io_netty_channel_epoll_Native_sendFd0(JNIEnv* env, j
 
     descriptorMessage.msg_control = control;
     descriptorMessage.msg_controllen = sizeof(control);
-    struct cmsghdr *cmsg = CMSG_FIRSTHDR(&descriptorMessage);
+    struct cmsghdr* cmsg = CMSG_FIRSTHDR(&descriptorMessage);
 
     if (cmsg) {
         cmsg->cmsg_len = CMSG_LEN(sizeof(int));

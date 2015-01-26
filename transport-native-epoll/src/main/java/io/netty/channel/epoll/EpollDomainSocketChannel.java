@@ -57,7 +57,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
 
     @Override
     protected void doBind(SocketAddress localAddress) throws Exception {
-        Native.bind(fd, localAddress);
+        Native.bind(fd().intValue(), localAddress);
         local = (DomainSocketAddress) localAddress;
     }
 
@@ -89,7 +89,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
     @Override
     protected boolean doWriteSingle(ChannelOutboundBuffer in) throws Exception {
         Object msg = in.current();
-        if (msg instanceof FileDescriptor && Native.sendFd(fd(), ((FileDescriptor) msg).intValue()) > 0) {
+        if (msg instanceof FileDescriptor && Native.sendFd(fd().intValue(), ((FileDescriptor) msg).intValue()) > 0) {
             // File descriptor was written, so remove it.
             in.remove();
             return true;
@@ -126,7 +126,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
 
             try {
                 for (;;) {
-                    int socketFd = Native.recvFd(fd);
+                    int socketFd = Native.recvFd(fd().intValue());
                     if (socketFd == 0) {
                         break;
                     }
