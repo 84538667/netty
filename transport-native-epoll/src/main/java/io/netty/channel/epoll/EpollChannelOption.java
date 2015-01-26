@@ -18,10 +18,6 @@ package io.netty.channel.epoll;
 import io.netty.channel.ChannelOption;
 
 public final class EpollChannelOption<T> extends ChannelOption<T> {
-    public enum EpollDomainSocketReadMode {
-        BYTES,
-        FILE_DESCRIPTORS
-    }
 
     public static final ChannelOption<Boolean> TCP_CORK = valueOf("TCP_CORK");
     public static final ChannelOption<Integer> TCP_KEEPIDLE = valueOf("TCP_KEEPIDLE");

@@ -23,6 +23,7 @@ import io.netty.channel.AbstractChannel;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelMetadata;
 import io.netty.channel.EventLoop;
+import io.netty.channel.FileDescriptor;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.internal.OneTimeTask;
 
@@ -47,7 +48,7 @@ abstract class AbstractEpollChannel extends AbstractChannel {
         readFlag = flag;
         flags |= flag;
         this.active = active;
-        fileDescriptor = new FileDescriptor(fd);
+        fileDescriptor = new EpollFileDescriptor(fd);
     }
 
     /**
@@ -91,7 +92,7 @@ abstract class AbstractEpollChannel extends AbstractChannel {
 
     @Override
     public boolean isOpen() {
-        return fileDescriptor != FileDescriptor.INVALID;
+        return fileDescriptor != EpollFileDescriptor.INVALID;
     }
 
     @Override

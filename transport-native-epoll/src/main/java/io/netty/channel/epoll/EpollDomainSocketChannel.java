@@ -19,11 +19,12 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelConfig;
 import io.netty.channel.ChannelOutboundBuffer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.FileDescriptor;
 
 import java.net.SocketAddress;
 
 public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
-    private final EpollDomainChannelConfig config = new EpollDomainChannelConfig(this);
+    private final EpollDomainSocketChannelConfig config = new EpollDomainSocketChannelConfig(this);
 
     private volatile DomainSocketAddress local;
     private volatile DomainSocketAddress remote;
@@ -32,7 +33,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
         super(Native.socketDomainFd());
     }
 
-    public EpollDomainSocketChannel(Channel parent, FileDescriptor fd) {
+    public EpollDomainSocketChannel(Channel parent, EpollFileDescriptor fd) {
         super(parent, fd.intValue());
     }
 
@@ -62,7 +63,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
     }
 
     @Override
-    public EpollDomainChannelConfig config() {
+    public EpollDomainSocketChannelConfig config() {
         return config;
     }
 
@@ -99,7 +100,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
 
     @Override
     protected Object filterOutboundMessage(Object msg) {
-        if (msg instanceof FileDescriptor) {
+        if (msg instanceof EpollFileDescriptor) {
             return msg;
         }
         return super.filterOutboundMessage(msg);
@@ -135,7 +136,7 @@ public final class EpollDomainSocketChannel extends AbstractEpollStreamChannel {
                         return;
                     }
                     readPending = false;
-                    pipeline.fireChannelRead(new FileDescriptor(socketFd));
+                    pipeline.fireChannelRead(new EpollFileDescriptor(socketFd));
                 }
                 pipeline.fireChannelReadComplete();
 

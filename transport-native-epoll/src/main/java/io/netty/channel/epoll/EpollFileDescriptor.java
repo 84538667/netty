@@ -15,38 +15,27 @@
  */
 package io.netty.channel.epoll;
 
+import io.netty.channel.FileDescriptor;
+
 import java.io.IOException;
 
-public final class FileDescriptor {
-
-    /**
-     * An invalid file descriptor which was closed before.
-     */
-    public static final FileDescriptor INVALID = new FileDescriptor();
+final class EpollFileDescriptor implements FileDescriptor {
 
     private final int fd;
 
-    public FileDescriptor(int fd) {
+    EpollFileDescriptor(int fd) {
         if (fd < 0) {
             throw new IllegalArgumentException("fd must be >= 0");
         }
         this.fd = fd;
     }
 
-    private FileDescriptor() {
-        fd = -1;
-    }
-
-    /**
-     * Return the int value of the filedescriptor.
-     */
+    @Override
     public int intValue() {
         return fd;
     }
 
-    /**
-     * Close the file descriptor.
-     */
+    @Override
     public void close() throws IOException {
         Native.close(fd);
     }
@@ -63,11 +52,11 @@ public final class FileDescriptor {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof FileDescriptor)) {
+        if (!(o instanceof EpollFileDescriptor)) {
             return false;
         }
 
-        return fd == ((FileDescriptor) o).fd;
+        return fd == ((EpollFileDescriptor) o).fd;
     }
 
     @Override

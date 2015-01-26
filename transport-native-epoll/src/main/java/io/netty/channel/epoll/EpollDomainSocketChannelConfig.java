@@ -12,7 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations
  * under the License.
- */package io.netty.channel.epoll;
+ */
+package io.netty.channel.epoll;
 
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
@@ -24,11 +25,11 @@ import io.netty.channel.RecvByteBufAllocator;
 
 import java.util.Map;
 
-public final class EpollDomainChannelConfig extends DefaultChannelConfig {
-    private volatile EpollChannelOption.EpollDomainSocketReadMode mode =
-            EpollChannelOption.EpollDomainSocketReadMode.BYTES;
+public final class EpollDomainSocketChannelConfig extends DefaultChannelConfig {
+    private volatile EpollDomainSocketReadMode mode =
+            EpollDomainSocketReadMode.BYTES;
 
-    EpollDomainChannelConfig(Channel channel) {
+    EpollDomainSocketChannelConfig(Channel channel) {
         super(channel);
     }
 
@@ -51,7 +52,7 @@ public final class EpollDomainChannelConfig extends DefaultChannelConfig {
         validate(option, value);
 
         if (option == EpollChannelOption.DOMAIN_SOCKET_READ_MODE) {
-            setReadMode((EpollChannelOption.EpollDomainSocketReadMode) value);
+            setReadMode((EpollDomainSocketReadMode) value);
         } else {
             return super.setOption(option, value);
         }
@@ -59,75 +60,75 @@ public final class EpollDomainChannelConfig extends DefaultChannelConfig {
         return true;
     }
     @Override
-    public EpollDomainChannelConfig setMaxMessagesPerRead(int maxMessagesPerRead) {
+    public EpollDomainSocketChannelConfig setMaxMessagesPerRead(int maxMessagesPerRead) {
         super.setMaxMessagesPerRead(maxMessagesPerRead);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setConnectTimeoutMillis(int connectTimeoutMillis) {
+    public EpollDomainSocketChannelConfig setConnectTimeoutMillis(int connectTimeoutMillis) {
         super.setConnectTimeoutMillis(connectTimeoutMillis);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setWriteSpinCount(int writeSpinCount) {
+    public EpollDomainSocketChannelConfig setWriteSpinCount(int writeSpinCount) {
         super.setWriteSpinCount(writeSpinCount);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setRecvByteBufAllocator(RecvByteBufAllocator allocator) {
+    public EpollDomainSocketChannelConfig setRecvByteBufAllocator(RecvByteBufAllocator allocator) {
         super.setRecvByteBufAllocator(allocator);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setAllocator(ByteBufAllocator allocator) {
+    public EpollDomainSocketChannelConfig setAllocator(ByteBufAllocator allocator) {
         super.setAllocator(allocator);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setAutoClose(boolean autoClose) {
+    public EpollDomainSocketChannelConfig setAutoClose(boolean autoClose) {
         super.setAutoClose(autoClose);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setMessageSizeEstimator(MessageSizeEstimator estimator) {
+    public EpollDomainSocketChannelConfig setMessageSizeEstimator(MessageSizeEstimator estimator) {
         super.setMessageSizeEstimator(estimator);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setWriteBufferLowWaterMark(int writeBufferLowWaterMark) {
+    public EpollDomainSocketChannelConfig setWriteBufferLowWaterMark(int writeBufferLowWaterMark) {
         super.setWriteBufferLowWaterMark(writeBufferLowWaterMark);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setWriteBufferHighWaterMark(int writeBufferHighWaterMark) {
+    public EpollDomainSocketChannelConfig setWriteBufferHighWaterMark(int writeBufferHighWaterMark) {
         super.setWriteBufferHighWaterMark(writeBufferHighWaterMark);
         return this;
     }
 
     @Override
-    public EpollDomainChannelConfig setAutoRead(boolean autoRead) {
+    public EpollDomainSocketChannelConfig setAutoRead(boolean autoRead) {
         super.setAutoRead(autoRead);
         return this;
     }
 
     /**
-     * Change the {@link EpollChannelOption.EpollDomainSocketReadMode} for the channel. The default is
-     * {@link EpollChannelOption.EpollDomainSocketReadMode#BYTES} which means bytes will be read from the
+     * Change the {@link EpollDomainSocketReadMode} for the channel. The default is
+     * {@link EpollDomainSocketReadMode#BYTES} which means bytes will be read from the
      * {@link Channel} and passed through the pipeline. If
-     * {@link EpollChannelOption.EpollDomainSocketReadMode#FILE_DESCRIPTORS} is used
-     * {@link FileDescriptor}s will be passed through the {@link ChannelPipeline}.
+     * {@link EpollDomainSocketReadMode#FILE_DESCRIPTORS} is used
+     * {@link EpollFileDescriptor}s will be passed through the {@link ChannelPipeline}.
      *
      * This setting can be modified on the fly if needed.
      */
-    public EpollDomainChannelConfig setReadMode(EpollChannelOption.EpollDomainSocketReadMode mode) {
+    public EpollDomainSocketChannelConfig setReadMode(EpollDomainSocketReadMode mode) {
         if (mode == null) {
             throw new NullPointerException("mode");
         }
@@ -136,9 +137,9 @@ public final class EpollDomainChannelConfig extends DefaultChannelConfig {
     }
 
     /**
-     * Return the {@link EpollChannelOption.EpollDomainSocketReadMode} for the channel.
+     * Return the {@link EpollDomainSocketReadMode} for the channel.
      */
-    public EpollChannelOption.EpollDomainSocketReadMode getReadMode() {
+    public EpollDomainSocketReadMode getReadMode() {
         return mode;
     }
 }
